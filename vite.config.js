@@ -5,5 +5,8 @@ import jsconfigPaths from "vite-jsconfig-paths";
 export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), jsconfigPaths()],
+    esbuild: {
+      pure: mode === "production" ? ["console.log"] : [],
+    },
   };
 });
