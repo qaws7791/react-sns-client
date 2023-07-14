@@ -1,8 +1,8 @@
-import { styled } from 'styled-components'
-
-export default function TextArea({ width, value, onChange, id, name, placeholder, ...props }) {
+import PropTypes from 'prop-types';
+import * as S from './TextArea.Style'
+const TextArea = ({ width, value, onChange, id, name, placeholder, ...props }) => {
   return (
-    <StyledTextArea
+    <S.TextArea
       name={name}
       id={id}
       value={value}
@@ -15,23 +15,13 @@ export default function TextArea({ width, value, onChange, id, name, placeholder
   )
 }
 
-const StyledTextArea = styled.textarea`
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 0.7em 1em;
-  font-size: 1.6rem;
-  outline: none;
-  resize: none;
-  width: 100%;
-  height: 200px;
-  ${(props) =>
-    props.width &&
-    css`
-      width: ${props.width}px;
-    `}
-  &:hover,
-  &:focus,
-  &:focus-within {
-    border-color: #000;
-  }
-`
+export default TextArea
+
+TextArea.propTypes = {
+  width: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+}

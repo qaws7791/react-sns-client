@@ -6,7 +6,8 @@ import { getUploadURL, uploadImageS3 } from "@/api/upload"
 import Button from "@/components/Button"
 import { useNavigate } from "react-router-dom"
 import usePopup from "@/hooks/usePopup"
-import styled from "styled-components"
+import * as S from './PostWritePage.Style'
+
 
 const PostWritePage = () => {
   const [content, setContent] = useState('')
@@ -56,26 +57,23 @@ const PostWritePage = () => {
   return (
     <div>
       <h2>글 작성</h2>
-      <Form onSubmit={onSubmit}>
+      <S.Form onSubmit={onSubmit}>
       <TextArea value={content} onChange={setContent}/>
       <input type='file' accept='image/*' onChange={handleSubmitUploadImage}/>
-      {imageUrl && <div><Button type="button" onClick={handleDeleteImage}>❌이미지 삭제</Button></div>}
-      {!isImageLoading && imageUrl && <InputImagePreview width={200} src={imageUrl+'?'+count}/>}
-      <div><Button fullWidth>작성</Button></div>
-      </Form>
+      {!isImageLoading && imageUrl && <>
+      <div>
+        <Button type="button" onClick={handleDeleteImage}>❌이미지 삭제</Button>
+      </div>
+      <S.InputImagePreview width={200} src={imageUrl+'?'+count}/>
+      </>
+      }
+      <div>
+        <Button fullWidth>작성</Button>
+      </div>
+      </S.Form>
     </div>
   )
 }
 
-const Form = styled.form`
-  gap: 2rem;
-  display: flex;
-  flex-direction: column;
-`
-
-const InputImagePreview = styled.img`
-  max-height: 200px;
-  object-fit: contain;
-`
 
 export default PostWritePage
