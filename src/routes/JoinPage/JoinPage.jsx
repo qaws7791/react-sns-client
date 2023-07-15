@@ -1,29 +1,43 @@
 import Button from "@/components/Button"
 import InputText from "@/components/InputText"
 import Link from "@/components/Link"
-import { __join } from "@/redux/modules/auth"
-import { useEffect, useState } from "react"
+import { __join, clearError } from "@/redux/modules/auth"
+import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import * as S from './JoinPage.Style'
+import usePopup from "@/hooks/usePopup"
 
 const JoinPage = () => {
   const [email,setEmail] = useState('')
   const [name,setName] = useState('')
   const [password,setPassword] = useState('')
-  const { isLogged } = useSelector((state) => state.auth)
+  const { isLogged,isError, errorMessage } = useSelector((state) => state.auth)
   const navigate = useNavigate()
+  const [openPopup] = usePopup()
 
   useEffect(()=>{
     if(isLogged) navigate('/')
   },[isLogged,navigate])
 
   const dispatch = useDispatch()
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     dispatch(__join({name,email,password}))
   }
 
+
+  const onError = useCallback(async(errorMessage) => {
+    await openPopup({title: '가입 실패', contents: errorMessage})
+    dispatch(clearError())
+  },[openPopup,dispatch]) 
+
+  useEffect(()=>{
+    console.log(isError,errorMessage,onError)
+    if(isError && errorMessage) {
+      onError(errorMessage)
+    }
+  },[isError,errorMessage,onError])
 
   return (
     <S.Container>

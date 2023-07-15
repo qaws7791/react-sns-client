@@ -1,8 +1,8 @@
 import './normalize.css'
 import { Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { __loadUser, __logout } from '@/redux/modules/auth'
-import { useEffect, useLayoutEffect } from 'react'
+import { __autoLogin, __logout } from '@/redux/modules/auth'
+import { useLayoutEffect } from 'react'
 import * as S from './Layout.Style'
 import Link from '@/components/Link'
 import Button from '@/components/Button'
@@ -15,16 +15,15 @@ const Layout = () => {
   }
 
   useLayoutEffect(()=>{
-    dispatch(__loadUser())
+    dispatch(__autoLogin())
   },[dispatch])
   
-  useEffect(()=>{
-    if(isLogged) {
-      console.log((new Date(expiration) - new Date())/1000)
-    }
-  },[isLogged, expiration])
+  // useEffect(()=>{
+  //   if(isLogged) {
+  //     console.log((new Date(expiration) - new Date())/1000)
+  //   }
+  // },[isLogged, expiration])
 
-  if (isLoading) return null
   return (
     <S.Container>
     <S.HeaderContainer>

@@ -23,15 +23,15 @@ instance.interceptors.request.use(
   }
 );
 
-instance.interceptors.response.use(
-  (response) => {
-    // console.log("정상 응답 받음: ", response);
-    return response;
-  },
-  (error) => {
-    // console.log("오류 응답 받음: ", error);
-    return Promise.reject(error);
-  }
-);
+// instance.interceptors.response.use(
+//   (response) => {
+//     // console.log("정상 응답 받음: ", response);
+//     return response;
+//   },
+//   (error) => {
+//     console.log("오류 응답 받음: ", error);
+//     return Promise.reject(error);
+//   }
+// );
 
 export default instance;
