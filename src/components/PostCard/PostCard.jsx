@@ -17,7 +17,7 @@ const PostCard = ({post, isLink=false}) => {
   const [isModalOpen,setModalOpen] = useState(false)
   const { content, id: postId, userId: postUser, createdAt,likes, imageUrl} = post
   const { userId:currentUserId } = useSelector((state) => state.auth)
-  const { name } = postUser
+  const { name:userName } = postUser
   const navigate = useNavigate()
 
   const queryClient = useQueryClient()
@@ -78,7 +78,7 @@ const PostCard = ({post, isLink=false}) => {
     <S.Container>
     <S.PostHeader>
       <S.PostInfo>
-        <S.UserName>{name}</S.UserName>
+        <S.UserName>{userName}</S.UserName>
         <S.PostDate>· {calculateRelativeTime(createdAt)}</S.PostDate>
       </S.PostInfo>
       <IconOnlyButton icon={<DotsThree/>} label='더 보기' onClick={()=>setModalOpen(true)}/>
@@ -112,7 +112,7 @@ const PostCard = ({post, isLink=false}) => {
         ? <Link to={`/p/${postId}`}><IconOnlyButton icon={<ChatCircle/>} label="댓글 보기"/></Link>:
         <IconOnlyButton icon={<ChatCircle/>} label="댓글"/>}
         <span>댓글: {post.comments.length}개</span>
-      </S.PostButtons>
+    </S.PostButtons>
   </S.Container>
   )
 }

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import styled from "styled-components"
+import * as S from './PostDetailPage.Style'
 
 const PostDetailPage = () => {
   const { postId }  = useParams()
@@ -33,12 +33,11 @@ const PostDetailPage = () => {
 
 
   const handleAddComment = async () => {
-    const res =await mutationAddComment.mutate({postId, comment})
+    await mutationAddComment.mutate({postId, comment})
   }
 
   const handleDeleteComment = async (commentId) => {
-    const res = await mutationDeleteComment.mutate({postId,commentId})
-
+    await mutationDeleteComment.mutate({postId,commentId})
   }
 
   useEffect(()=>{
@@ -52,68 +51,31 @@ const PostDetailPage = () => {
   return (
     <div>
       <PostCard isLink={false} post={data.post}/>
-      <PostComments>
+      <S.PostComments>
 
         <h3>댓글 작성</h3>
-        <CommentWrite>
+        <S.CommentWrite>
             <InputText value={comment} onChange={setComment} width="100%" />
             <Button onClick={handleAddComment}>댓글 쓰기</Button>
-        </CommentWrite>
+        </S.CommentWrite>
 
-        <CommentsList>
+        <S.CommentsList>
 
           {data.post?.comments.map(comment=>
-            <CommentItem key={comment.id}>
-                <CommentHeader>
-                <CommentUser>{comment.userId.name}</CommentUser>
-                <CommentDate>{calculateRelativeTime(comment.createdAt)}</CommentDate>
-                </CommentHeader>
-                <CommentContent>{comment.content}</CommentContent>
+            <S.CommentItem key={comment.id}>
+                <S.CommentHeader>
+                <S.CommentUser>{comment.userId.name}</S.CommentUser>
+                <S.CommentDate>{calculateRelativeTime(comment.createdAt)}</S.CommentDate>
+                </S.CommentHeader>
+                <S.CommentContent>{comment.content}</S.CommentContent>
               {comment.userId.id === userId && <Button onClick={()=>handleDeleteComment(comment.id)}>댓글 삭제</Button>}
-            </CommentItem>
+            </S.CommentItem>
           )}
-        </CommentsList>
-      </PostComments>
+        </S.CommentsList>
+      </S.PostComments>
 
     </div>
   )
 }
-
-
-const PostComments = styled.div`
-  
-`
-
-const CommentWrite = styled.div`
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  margin: 0 20px;
-`
-
-const CommentsList = styled.ul`
-  
-`
-const CommentItem = styled.li`
-  padding: 1rem;
-  box-shadow: 0 -1px 0 0 #ccc inset;
-`
-
-const CommentHeader = styled.div`
-  gap: 2rem;
-  display: flex;
-`
-
-const CommentUser = styled.span`
-  font-weight: 600;
-`
-
-const CommentContent = styled.p`
-  
-`
-
-const CommentDate = styled.span`
-    color: #757575;
-`
 
 export default PostDetailPage

@@ -26,8 +26,21 @@ export const InputText = styled.input`
   &:invalid {
     border-color: #ff5151;
   }
-  &:invalid ~ span {
+  &:focus:invalid ~ span {
     display: block;
+  }
+
+  ${(props) =>
+    props.pattern &&
+    css`
+      &:valid {
+        border-color: #05ce00;
+      }
+    `}
+
+  pattern
+  &:valid {
+    border-color: #05ce00;
   }
 `;
 

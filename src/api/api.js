@@ -1,9 +1,6 @@
 import { default as axios } from "axios";
 const { VITE_SERVER_URL } = import.meta.env;
 
-console.log(import.meta.env);
-console.log(VITE_SERVER_URL);
-
 const instance = axios.create({
   baseURL: VITE_SERVER_URL,
   headers: { "Content-type": "application/json" },
@@ -26,15 +23,15 @@ instance.interceptors.request.use(
   }
 );
 
-instance.interceptors.response.use(
-  (response) => {
-    // console.log("정상 응답 받음: ", response);
-    return response;
-  },
-  (error) => {
-    // console.log("오류 응답 받음: ", error);
-    return Promise.reject(error);
-  }
-);
+// instance.interceptors.response.use(
+//   (response) => {
+//     // console.log("정상 응답 받음: ", response);
+//     return response;
+//   },
+//   (error) => {
+//     console.log("오류 응답 받음: ", error);
+//     return Promise.reject(error);
+//   }
+// );
 
 export default instance;

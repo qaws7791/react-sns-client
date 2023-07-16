@@ -1,7 +1,7 @@
 export const calculateRelativeTime = (timestamp) => {
-  const currentTimestamp = Date.now(); // 현재 시간의 UTC 타임스탬프 (초 단위)
+  const currentTimestamp = Date.now(); // 현재 시간의 UTC 타임스탬프
 
-  const timeDifference = currentTimestamp - timestamp; // 현재 시간과의 차이 (초 단위)
+  const timeDifference = currentTimestamp - timestamp; // 현재 시간과의 차이
   const timeMinutes = Math.floor(timeDifference / 1000);
 
   if (timeMinutes < 60) {

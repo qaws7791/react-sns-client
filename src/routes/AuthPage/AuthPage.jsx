@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import PropTypes from 'prop-types';
 
 const AuthPage = ({ children }) => {
   const { isLoading,isLogged } = useSelector((state)=>state.auth)
@@ -19,5 +20,10 @@ const AuthPage = ({ children }) => {
     <>{children}</>
   )
 }
+
+AuthPage.propTypes = {
+  children: PropTypes.element
+}
+
 
 export default AuthPage

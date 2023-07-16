@@ -1,20 +1,18 @@
-import { Link as LinkComponent } from "react-router-dom"
-import styled from "styled-components"
+import * as S from './Link.Style'
+import PropTypes, { oneOfType } from 'prop-types';
 
-const Link = ({to, children, ...props }) => {
+const Link = ({ to, children, ...props }) => {
   return (
-    <StyledLink to={to} {...props}>{children}</StyledLink>
+    <S.StyledLink to={to} {...props}>
+      {children}
+    </S.StyledLink>
   )
 }
 
-const StyledLink = styled(LinkComponent)`
-  display: inline-block;
-  position: relative;
-  padding: 1rem;
-  color: #0b95ff;
-  &:hover{
-    text-decoration: underline;
-  }
-`
+Link.propTypes = {
+  to: PropTypes.string,
+  children: oneOfType([PropTypes.string, PropTypes.element])
+}
+
 
 export default Link

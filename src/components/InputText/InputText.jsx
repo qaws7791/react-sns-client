@@ -37,9 +37,6 @@ const InputText = ({
   )
 }
 
-InputText.defaultProps = {
-}
-
 InputText.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,

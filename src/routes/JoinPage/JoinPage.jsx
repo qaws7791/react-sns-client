@@ -1,11 +1,11 @@
 import Button from "@/components/Button"
 import InputText from "@/components/InputText"
 import Link from "@/components/Link"
-import { __join } from "@/redux/modules/auth"
+import { __join,  } from "@/redux/modules/auth"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import styled from "styled-components"
+import * as S from './JoinPage.Style'
 
 const JoinPage = () => {
   const [email,setEmail] = useState('')
@@ -19,16 +19,17 @@ const JoinPage = () => {
   },[isLogged,navigate])
 
   const dispatch = useDispatch()
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     dispatch(__join({name,email,password}))
   }
 
 
+
   return (
-    <Container>
+    <S.Container>
       <h2>회원가입</h2>
-      <Form onSubmit={onSubmit}>
+      <S.JoinForm onSubmit={onSubmit}>
           <label htmlFor="name">Name: </label>
           <InputText 
             required 
@@ -70,23 +71,9 @@ const JoinPage = () => {
           />
          <Button>가입</Button>
          <div><span>이미 아이디가 있으신가요?</span><Link to='/login'>로그인</Link></div>
-      </Form>
-    </Container>
+      </S.JoinForm>
+    </S.Container>
   )
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-`
-
-const Form = styled.form`
-  width: 400px;
-  gap: 13px;
-  display: flex;
-  flex-direction: column;
-`
 
 export default JoinPage

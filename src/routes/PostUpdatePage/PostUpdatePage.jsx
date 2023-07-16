@@ -8,6 +8,8 @@ import { useQuery } from "react-query"
 import { getUploadURL, uploadImageS3 } from "@/api/upload"
 import Button from "@/components/Button"
 import usePopup from "@/hooks/usePopup"
+import * as S from './PostUpdatePage.Style'
+
 const PostUpdatePage = () => {
   const [content, setContent] = useState('')
   const [isImageLoading,setImageLoading] = useState(false)
@@ -77,9 +79,13 @@ const PostUpdatePage = () => {
       <form onSubmit={onSubmit}>
       <TextArea value={content} onChange={setContent}/>
       <input type='file' accept='image/*' onChange={handleSubmitUploadImage}/>
-      <Button type="button" onClick={handleRestoreImage}>이미지 원래대로</Button>
-      <Button type="button" onClick={handleDeleteImage}>❌이미지 삭제</Button>
-      {!isImageLoading && imageUrl && <img width={500} src={imageUrl+'?'+count}/>}
+      {!isImageLoading && imageUrl && <>
+      <div>
+        <Button type="button" onClick={handleRestoreImage}>이미지 원래대로</Button>
+        <Button type="button" onClick={handleDeleteImage}>❌이미지 삭제</Button>
+      </div>
+      <S.InputImagePreview width={200} src={imageUrl+'?'+count}/>
+      </>}
       <Button>변경</Button>
       </form>
     </div>
