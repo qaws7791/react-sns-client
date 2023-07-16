@@ -1,19 +1,18 @@
 import Button from "@/components/Button"
 import InputText from "@/components/InputText"
 import Link from "@/components/Link"
-import { __login, clearError } from "@/redux/modules/auth"
-import { useCallback, useEffect, useState } from "react"
+import { __login,  } from "@/redux/modules/auth"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import * as S from './LoginPage.Style'
-import usePopup from "@/hooks/usePopup"
 
 const LoginPage = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
-  const { isLogged,errorMessage,isError } = useSelector((state) => state.auth)
+  const { isLogged } = useSelector((state) => state.auth)
   const navigate = useNavigate()
-  const [openPopup] = usePopup()
+
 
   useEffect(()=>{
     if(isLogged) navigate('/')
@@ -26,16 +25,6 @@ const LoginPage = () => {
   dispatch(__login({email, password}))
   }
 
-  const onError = useCallback(async() => {
-    await openPopup({title: '로그인 실패', contents: errorMessage})
-    dispatch(clearError())
-  },[errorMessage, openPopup, dispatch]) 
-
-  useEffect(()=>{
-    if(isError && errorMessage) {
-      onError()
-    }
-  },[isError, errorMessage, onError])
   return (
     <S.Container>
       <h2>로그인</h2>

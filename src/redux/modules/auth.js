@@ -1,4 +1,4 @@
-import { getAccessToken, joinUser, loginUser, logoutUser } from "@/api/user";
+import { autoLogin, joinUser, loginUser, logoutUser } from "@/api/user";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const TOKEN_EXPIRATION = 1000 * 60 * 60; // 1hr
 
@@ -97,7 +97,7 @@ export const __autoLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     // 리프레시 토큰으로 토큰 재발급
     try {
-      const data = await getAccessToken();
+      const data = await autoLogin();
       const expiration = new Date(
         new Date().getTime() + TOKEN_EXPIRATION
       ).toISOString();
@@ -174,7 +174,7 @@ const authSlice = createSlice({
       state.isLogged = false;
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload;
+      state.errorMessage = { title: "가입 실패", content: action.payload };
     },
 
     [__login.pending]: (state, action) => {
@@ -205,7 +205,7 @@ const authSlice = createSlice({
       state.isLogged = false;
       state.isLoading = false;
       state.isError = true;
-      state.errorMessage = action.payload;
+      state.errorMessage = { title: "로그인 실패", content: action.payload };
     },
     [__logout.fulfilled]: (state, action) => {
       state.token = "";
@@ -244,8 +244,11 @@ const authSlice = createSlice({
       state.expiration = "";
       state.isLogged = false;
       state.isLoading = false;
-      state.isError = true;
-      state.errorMessage = action.payload;
+      state.isError = false;
+      state.errorMessage = {
+        title: "자동 로그인 실패",
+        content: action.payload,
+      };
     },
   },
 });

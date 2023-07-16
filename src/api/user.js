@@ -23,12 +23,12 @@ export const logoutUser = async () => {
   return res.data;
 };
 
+export const autoLogin = async () => {
+  const res = await api.post(`/user/autoLogin`);
+  return res.data;
+};
+
 export const getAccessToken = async () => {
-  try {
-    const res = await api.post(`/user/refresh`);
-    return res.data;
-  } catch (error) {
-    // console.log(error);
-  }
-  return;
+  const res = await api.post(`/user/refresh`);
+  return res.data;
 };
